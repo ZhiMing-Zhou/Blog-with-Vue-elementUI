@@ -65,10 +65,6 @@ export default {
     },
     //  点击分类加载博客
     getThisCategoryBlog (catid) {
-      // 更新store里的catid
-      this.$store.commit('reviseCatId', catid)
-      // 跳转到BlogList
-      this.$router.push('/BlogList')
       // 执行子组件的加载博客方法
       this.$refs.BlogList.loadBlogData(1, catid)
       // 更新子组件的当前分类ID

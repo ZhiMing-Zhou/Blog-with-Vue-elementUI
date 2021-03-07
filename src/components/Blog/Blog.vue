@@ -1,7 +1,7 @@
 <template>
   <div id="blogDetail">
-    <h3 id="title">{{ blog.title }}</h3>
-    <div id="content">{{ blog.content }}</div>
+    <h3 id="title" v-html="blog.title"></h3>
+    <div id="content" v-html="blog.content"></div>
   </div>
 </template>
 
@@ -37,9 +37,5 @@ export default {
 #title {
   margin-bottom: 10px;
   border-bottom: 1px dashed #dcdfe6;
-}
-
-.el-main{
-  overflow: hidden !important;
 }
 </style>

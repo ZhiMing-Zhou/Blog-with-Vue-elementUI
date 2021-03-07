@@ -5,12 +5,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    curcatid: null
+    isLogin: false
   },
   mutations: {
-    reviseCatId (state, id) {
-      state.curcatid = id
-      console.log(state.curcatid)
+    reviseLoginStatus (state, status) {
+      this.state.isLogin = status
     }
   }
 })
