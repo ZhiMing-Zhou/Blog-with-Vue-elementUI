@@ -38,4 +38,8 @@ export default {
   margin-bottom: 10px;
   border-bottom: 1px dashed #dcdfe6;
 }
+
+#content{
+  font-size: 14px;
+}
 </style>

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <form>
+      <input type="text"  v-model='key'/>
+      <button style="backgroundColor:#67C23A" @click="search">搜索</button>
+    </form>
     <el-table
       :data="articalData"
       stripe
@@ -45,14 +49,18 @@ export default {
       total: 0,
       // 页码
       pagenum: 1,
-      curcatid: null
+      // 当前分类Id
+      curCatId: null,
+      // 搜索关键字
+      key: ''
     }
   },
   created () {
-    // 从store获取当前页的分类ID,默认为null
-    this.curcatid = this.$store.state.curcatid
+    // 在从全局拿到curCatId
+    this.curCatId = this.$store.state.curCatId
+
     // 加载博客
-    this.loadBlogData(1, this.curcatid)
+    this.loadBlogData(1, this.curCatId)
   },
   methods: {
     // 获取全部博客
@@ -107,11 +115,31 @@ export default {
     },
     // 点击页码
     clickCurrentPage (curpage) {
-      this.loadBlogData(curpage, this.curcatid)
+      this.loadBlogData(curpage, this.curCatId)
     },
     // 点击表格的行跳转到博客详情
     jumpTo (row) {
       this.$router.push(`/Blog/${row.id}`)
+    },
+    search () {
+      axios.get('http://localhost:80/mikesblog/servers/search/search.php', {
+        params: {
+          key: this.key
+        }
+      }).then(res => {
+        console.log(res)
+        if (res.data.data.code === 400) {
+          this.$message({
+            message: '未找到匹配数据',
+            type: 'warning'
+          })
+          this.key = ''
+        } else {
+          // this.articalData = res.data.data.data
+          // this.total = +res.data.data.total
+          // this.pagenum = +res.data.data.pagenum
+        }
+      })
     }
   }
 }
@@ -121,5 +149,25 @@ export default {
 #pagination {
   padding-right: 0px;
   float: right;
+}
+form button{
+  display: inline-block;
+  vertical-align: middle;
+  height:30px;
+  padding:0px 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  color: white;
+  outline: none;
+}
+
+form input{
+  vertical-align: middle;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  outline: none;
 }
 </style>

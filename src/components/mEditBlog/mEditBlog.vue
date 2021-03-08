@@ -1,6 +1,6 @@
 <template>
-  <div id="ct">
-    <div>标题</div>
+  <div>
+    <p>标题</p>
     <input
       id="title"
       type="text"
@@ -14,6 +14,7 @@
       v-model="blog.content"
     ></quill-editor>
     <el-button size="min" type="success" @click="submitRevise">提交</el-button>
+
   </div>
 </template>
 

@@ -8,7 +8,7 @@
         </el-col>
         <el-col :span="8" class="nav">
           <el-row type="flex" justify="end">
-            <el-col :span="4"><router-link to="">退出</router-link></el-col>
+            <el-col :span="4" @click.native="logOut()">退出</el-col>
           </el-row>
         </el-col>
       </el-row>
@@ -30,6 +30,9 @@
               </el-menu-item>
               <el-menu-item index="/mAddBlog">
                 <span slot="title">添加博客</span>
+              </el-menu-item>
+              <el-menu-item index="/mEditCategory">
+                <span slot="title">编辑分类</span>
               </el-menu-item>
               <el-menu-item index="/mComments">
                 <span slot="title">管理评论</span>
@@ -54,11 +57,12 @@
 
 <script>
 export default {
-  data () {
-    return {}
-  },
-  created () {},
-  methods: {}
+  methods: {
+    logOut () {
+      this.$store.commit('updateLoginStatus', false)
+      this.$router.push('/Login')
+    }
+  }
 }
 </script>
 

@@ -11,6 +11,8 @@ import mComments from '@/components/mComments/mComments'
 import mAddBlog from '@/components/mAddBlog/mAddBlog'
 import mSetting from '@/components/mSetting/mSetting'
 import mEditBlog from '@/components/mEditBlog/mEditBlog'
+import mEditCategory from '@/components/mEditCategory/mEditCategory'
+import Project from '@/components/Project/Project'
 import store from '@/store/store.js'
 
 Vue.use(Router)
@@ -33,7 +35,8 @@ const router = new Router({
       redirect: 'BlogList',
       children: [
         { path: '/BlogList', name: 'BlogList', component: BlogList },
-        { path: '/Blog/:id', name: 'Blog', component: Blog }
+        { path: '/Blog/:id', name: 'Blog', component: Blog },
+        { path: '/Project', name: 'Project', component: Project }
       ]
     },
     {
@@ -49,6 +52,7 @@ const router = new Router({
       children: [
         { path: '/mAllBlogs', name: 'mAllBlogs', component: mAllBlogs },
         { path: '/mAddBlog', name: 'mAddBlog', component: mAddBlog },
+        { path: '/mEditCategory', name: 'mEditCategory', component: mEditCategory },
         { path: '/mComments', name: 'mComments', component: mComments },
         { path: '/mSetting', name: 'mSetting', component: mSetting },
         { path: '/mUser', name: 'mUser', component: mUser },
@@ -59,13 +63,22 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  const nextRoute = ['mAllBlogs', 'mAddBlog', 'mComments', 'mSetting', 'mUser', 'mEditBlog']
+  const nextRoute = ['mAllBlogs', 'mAddBlog', 'mEditCategory', 'mComments', 'mSetting', 'mUser', 'mEditBlog']
   if (nextRoute.indexOf(to.name) >= 0) {
     if (store.state.isLogin === true) {
       return next()
     } else {
       return next('login')
     }
+  } else {
+    return next()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/BlogList') {
+    store.commit('updateFlag', false)
+    return next()
   } else {
     return next()
   }

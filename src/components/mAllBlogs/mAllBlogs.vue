@@ -75,7 +75,6 @@ export default {
     }
   },
   created () {
-    // 删除时组件周期未消亡，created不会执行
     this.loadBlogData(this.pagenum, this.curcatid)
   },
   methods: {
@@ -153,7 +152,7 @@ export default {
               message: '删除成功',
               type: 'success'
             })
-            this.$router.push('/mAllBlogs')
+            this.loadBlogData(this.pagenum)
           } else {
             this.$message({
               message: '删除失败!',

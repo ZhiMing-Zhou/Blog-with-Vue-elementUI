@@ -64,7 +64,7 @@ export default {
                   type: 'error'
                 })
               } else if (res.data.data.code === 200) {
-                this.$store.commit('reviseLoginStatus', true)
+                this.$store.commit('updateLoginStatus', true)
                 this.$router.push('/mAllBlogs')
               }
             })

@@ -5,11 +5,22 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    isLogin: false
+    // 是否登录，记录登录状态
+    isLogin: false,
+    // 当前分类的ID
+    curCatId: null,
+    // 是否隐藏侧边栏
+    flag: false
   },
   mutations: {
-    reviseLoginStatus (state, status) {
-      this.state.isLogin = status
+    updateLoginStatus (state, status) {
+      state.isLogin = status
+    },
+    updateCurCatId (state, curCatId) {
+      state.curCatId = curCatId
+    },
+    updateFlag (state, status) {
+      state.flag = status
     }
   }
 })

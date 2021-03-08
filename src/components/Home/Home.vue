@@ -8,11 +8,17 @@
         </el-col>
         <el-col :span="8" class="nav">
           <el-row type="flex" justify="space-between">
-            <el-col :span="4"><router-link to="/BlogList">首页</router-link></el-col>
-            <el-col :span="4">项目</el-col>
-            <el-col :span="4"><router-link to="/Login">登录</router-link></el-col>
             <el-col :span="4"
-              ><a href="https://github.com/ZhiMing-Zhou/Bilibili"
+              ><router-link to="/BlogList">首页</router-link></el-col
+            >
+            <el-col :span="4"
+              ><router-link to="/Project">项目</router-link></el-col
+            >
+            <el-col :span="4"
+              ><router-link to="/Login">登录</router-link></el-col
+            >
+            <el-col :span="4"
+              ><a href="https://github.com/ZhiMing-Zhou"
                 >GitHub</a
               ></el-col
             >
@@ -22,7 +28,7 @@
     </el-header>
     <el-container>
       <!-- 左侧导航 -->
-      <el-aside width="230px">
+      <el-aside width="230px" :class="{ hide: flag }">
         <h5>分类:</h5>
         <ul class="aside-nav">
           <li
@@ -64,11 +70,23 @@ export default {
         })
     },
     //  点击分类加载博客
-    getThisCategoryBlog (catid) {
+    getThisCategoryBlog (curCatId) {
+      // 先把curCatId保存到全局
+      this.$store.commit('updateCurCatId', curCatId)
+
+      // 然后再跳转
+      this.$router.push('/BlogList')
+
+      // 更新子组件的当前分类ID(分页)
+      this.$refs.BlogList.curCatId = curCatId
+
       // 执行子组件的加载博客方法
-      this.$refs.BlogList.loadBlogData(1, catid)
-      // 更新子组件的当前分类ID
-      this.$refs.BlogList.curcatid = catid
+      this.$refs.BlogList.loadBlogData(1, curCatId)
+    }
+  },
+  computed: {
+    flag () {
+      return this.$store.state.flag
     }
   }
 }
@@ -76,7 +94,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .el-container {
   width: 1150px;
   margin: 0 auto;
@@ -117,9 +134,22 @@ export default {
   font-weight: bold;
   cursor: pointer;
 }
-a{
+a {
+  color: black;
   display: block;
   width: 100%;
   height: 100%;
+}
+/* a:hover {
+  color: black;
+}
+a:visited {
+  color: black;
+}
+a:active {
+  color: black;
+} */
+.hide {
+  display: none;
 }
 </style>
