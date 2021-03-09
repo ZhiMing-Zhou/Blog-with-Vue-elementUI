@@ -20,7 +20,7 @@
         <el-row class="tac">
           <el-col :span="24">
             <el-menu
-              default-active="1"
+              default-active="/mAllBlogs"
               class="el-menu-vertical-demo"
               active-text-color="#000000"
               :router="true"

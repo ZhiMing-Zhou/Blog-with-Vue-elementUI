@@ -49,24 +49,19 @@ export default {
       total: 0,
       // 页码
       pagenum: 1,
-      // 当前分类Id
-      curCatId: null,
-      // 搜索关键字
+      // 关键字
       key: ''
     }
   },
   created () {
-    // 在从全局拿到curCatId
-    this.curCatId = this.$store.state.curCatId
-
     // 加载博客
-    this.loadBlogData(1, this.curCatId)
+    this.getAllBlogs()
   },
   methods: {
     // 获取全部博客
-    getAllBlogs (pagenum) {
+    getAllBlogs (pagenum = 1) {
       axios
-        .get('http://localhost:80/mikesblog/servers/list/list.php', {
+        .get('http://localhost:80/mikesblog/servers/unclassified/unclassified.php', {
           params: {
             pagenum,
             pagesize: 10
@@ -75,52 +70,14 @@ export default {
         .then(res => {
           if (res.data.data.code === 200) {
             this.articalData = res.data.data.data
+            // 用于显示页码
             this.total = +res.data.data.total
           }
         })
-    },
-    // 获取指定分类博客
-    getBlogsInCate (pagenum, catid) {
-      axios
-        .get(
-          'http://localhost:80/mikesblog/servers/blogsincategory/blogsincategory.php',
-          {
-            params: {
-              pagenum,
-              pagesize: 10,
-              catid
-            }
-          }
-        )
-        .then(res => {
-          if (res.data.data.code === 200) {
-            this.articalData = res.data.data.data
-            this.total = +res.data.data.total
-          } else {
-            this.articalData = []
-            this.total = 0
-          }
-        })
-    },
-    /**
-     * 加载博客
-     * @params pagenum [num] 页码
-     * @params catid  [num] 分类ID
-     */
-    loadBlogData (pagenum, catid) {
-      // 设置默认值
-      pagenum = pagenum || 1
-      // 如果没有catid,加载全部博客，有则加载catid对应的博客
-      if (!catid) {
-        this.getAllBlogs(pagenum)
-      } else {
-        // 如果有catid,加载catid对应的博客
-        this.getBlogsInCate(pagenum, catid)
-      }
     },
     // 点击页码
     clickCurrentPage (curpage) {
-      this.loadBlogData(curpage, this.curCatId)
+      this.getAllBlogs(curpage)
     },
     // 点击表格的行跳转到博客详情
     jumpTo (row) {

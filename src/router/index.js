@@ -13,6 +13,9 @@ import mSetting from '@/components/mSetting/mSetting'
 import mEditBlog from '@/components/mEditBlog/mEditBlog'
 import mEditCategory from '@/components/mEditCategory/mEditCategory'
 import Project from '@/components/Project/Project'
+import Search from '@/components/Search/Search'
+import Unclassified from '@/components/Unclassified/Unclassified'
+
 import store from '@/store/store.js'
 
 Vue.use(Router)
@@ -36,7 +39,9 @@ const router = new Router({
       children: [
         { path: '/BlogList', name: 'BlogList', component: BlogList },
         { path: '/Blog/:id', name: 'Blog', component: Blog },
-        { path: '/Project', name: 'Project', component: Project }
+        { path: '/Project', name: 'Project', component: Project },
+        { path: '/Search/:key', name: 'Search', component: Search },
+        { path: '/Unclassified', name: 'Unclassified', component: Unclassified }
       ]
     },
     {

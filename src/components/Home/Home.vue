@@ -18,9 +18,7 @@
               ><router-link to="/Login">登录</router-link></el-col
             >
             <el-col :span="4"
-              ><a href="https://github.com/ZhiMing-Zhou"
-                >GitHub</a
-              ></el-col
+              ><a href="https://github.com/ZhiMing-Zhou">GitHub</a></el-col
             >
           </el-row>
         </el-col>
@@ -38,6 +36,7 @@
           >
             {{ item.name }}
           </li>
+          <li><router-link to="/Unclassified">未分类</router-link></li>
         </ul>
       </el-aside>
       <!-- 内容区 -->
@@ -66,7 +65,9 @@ export default {
       axios
         .get('http://localhost:80/mikesblog/servers/categories/categories.php')
         .then(res => {
-          this.categories = res.data.data
+          if (res.data.data.code === 200) {
+            this.categories = res.data.data.data
+          }
         })
     },
     //  点击分类加载博客
@@ -78,10 +79,14 @@ export default {
       this.$router.push('/BlogList')
 
       // 更新子组件的当前分类ID(分页)
-      this.$refs.BlogList.curCatId = curCatId
+      if (this.$refs.BlogList.curCatId) {
+        this.$refs.BlogList.curCatId = curCatId
+      }
 
       // 执行子组件的加载博客方法
-      this.$refs.BlogList.loadBlogData(1, curCatId)
+      if (this.$refs.BlogList.loadBlogData) {
+        this.$refs.BlogList.loadBlogData(1, curCatId)
+      }
     }
   },
   computed: {
@@ -130,6 +135,11 @@ export default {
   font-size: 12px;
 }
 .el-aside .aside-nav li:hover {
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.active{
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;

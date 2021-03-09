@@ -25,7 +25,9 @@ export default {
           }
         })
         .then(res => {
-          this.blog = res.data.data[0]
+          if (res.data.data.code === 200) {
+            this.blog = res.data.data.data[0]
+          }
         })
     }
   }

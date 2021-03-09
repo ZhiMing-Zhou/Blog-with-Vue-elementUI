@@ -46,7 +46,9 @@ export default {
           }
         })
         .then(res => {
-          this.blog = res.data.data[0]
+          if (res.data.data.code === 200) {
+            this.blog = res.data.data.data[0]
+          }
         })
     },
     submitRevise () {
@@ -69,6 +71,7 @@ export default {
             })
             this.blog.title = ''
             this.blog.content = ''
+            this.$router.push('/mAllBlogs')
           } else {
             this.$message({
               message: '修改失败',

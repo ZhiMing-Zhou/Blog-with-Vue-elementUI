@@ -78,6 +78,7 @@ export default {
     this.loadBlogData(this.pagenum, this.curcatid)
   },
   methods: {
+    // 获取全部分类博客
     getAllBlogs (pagenum) {
       axios
         .get('http://localhost:80/mikesblog/servers/list/list.php', {
@@ -87,9 +88,13 @@ export default {
           }
         })
         .then(res => {
-          this.tableData = res.data.data.data
-          this.total = +res.data.data.total
-          this.pagenum = +res.data.data.pagenum
+          if (res.data.data.code === 200) {
+            this.tableData = res.data.data.data
+            this.total = +res.data.data.total
+          } else {
+            this.tableData = []
+            this.total = 0
+          }
         })
     },
     // 获取指定分类博客
@@ -106,9 +111,10 @@ export default {
           }
         )
         .then(res => {
-          this.tableData = res.data.data.data
-          this.total = +res.data.data.total
-          this.pagenum = +res.data.data.pagenum
+          if (res.data.data.code === 200) {
+            this.tableData = res.data.data.data
+            this.total = +res.data.data.total
+          }
         })
     },
     /**
@@ -152,6 +158,7 @@ export default {
               message: '删除成功',
               type: 'success'
             })
+            this.pagenum = Math.ceil(res.data.data.total / 10)
             this.loadBlogData(this.pagenum)
           } else {
             this.$message({

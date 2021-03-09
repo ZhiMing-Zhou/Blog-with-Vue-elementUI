@@ -99,7 +99,7 @@ export default {
       axios
         .get('http://localhost:80/mikesblog/servers/categories/categories.php')
         .then(res => {
-          this.categories = res.data.data
+          this.categories = res.data.data.data
         })
     }
   },
