@@ -9,7 +9,7 @@
       </p>
     </div>
     <div>
-      <a href="/BlogList"><h5 id="title">基于vue+elementUI的个人博客</h5></a>
+      <a href="http://www.mikesblog.xyz"><h5 id="title">此博客站,基于vue+elementUI</h5></a>
       <p id="introduce">
         这是一个基于vue+elementUI打造的个人博客
       </p>
